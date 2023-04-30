@@ -1,0 +1,32 @@
+[
+  {
+    "imgUrl": "slider1.jpg",
+    "content": "survey1",
+    "surveyId": "#"
+  },
+  {
+    "imgUrl": "slider2.jpg",
+    "content": "survey2",
+    "surveyId": "#"
+  },
+  {
+    "imgUrl": "slider3.jpg",
+    "content": "survey3",
+    "surveyId": "#"
+  },
+  {
+    "imgUrl": "slider4.jpg",
+    "content": "survey4",
+    "surveyId": "#"
+  },
+  {
+    "imgUrl": "slider5.jpg",
+    "content": "survey5",
+    "surveyId": "#"
+  },
+  {
+    "imgUrl": "slider6.jpg",
+    "content": "survey6",
+    "surveyId": "#"
+  }
+]
