@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import MainLayout from '../../Layout/MainLayout/MainLayout';
 import Honors from './Honors/Honors';
 import SliderComp from './Projects/Slider';
@@ -10,17 +11,11 @@ export default function HomePage() {
     <MainLayout>
       {/* <SliderComp /> */}
       <SurveySlider />
-      <BodyWrapper>
+      <Container sx={{marginTop: '54px'}}>
         <Honors />
         <SurveyForFaculty />
         <SurveyForStudent />
-      </BodyWrapper>
+      </Container>
     </MainLayout>
   )
-}
-
-function BodyWrapper({children}: {children:any}) {
-  return <div className='container px-20 mt-16'>
-    {children}
-  </div>
 }
