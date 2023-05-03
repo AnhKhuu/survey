@@ -9,6 +9,8 @@ import SignupPage from './pages/SignupPage/SignupPage';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SurveyPage from './pages/SurveyPage/SurveyPage';
+import FAQsPage from './pages/FAQsPage/FAQsPage';
+import SupportPage from './pages/SupportPage/SupportPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
   {
     path: "/surveys/:surveyId",
     element: <SurveyPage />
+  },
+  {
+    path: "/faqs",
+    element: <FAQsPage />
+  },
+  {
+    path: "/support-information",
+    element: <SupportPage />
   },
 ]);
 
