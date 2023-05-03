@@ -1,11 +1,15 @@
 import React from 'react'
+import MainLayout from '../../Layout/MainLayout/MainLayout'
+import SurveyForm from './SurveyForm/SurveyForm'
+import { Container } from '@mui/material'
 
 export default function SurveyPage() {
   return (
-    <div>SurveyPage</div>
+    <MainLayout>
+      <Container sx={{marginTop: '54px'}}>
+        <h1 className='text-lg text-anger font-bold text-center mb-5'>SURVEY FORM</h1>
+        <SurveyForm />
+      </Container>
+    </MainLayout>
   )
-}
-
-function SelectQuestion() {
-  
 }
