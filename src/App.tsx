@@ -11,6 +11,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SurveyPage from './pages/SurveyPage/SurveyPage';
 import FAQsPage from './pages/FAQsPage/FAQsPage';
 import SupportPage from './pages/SupportPage/SupportPage';
+import AccountPage from './pages/admin/account/AccountPage/AccountPage';
+import SurveyCreatePage from './pages/admin/survey/SurveyCreatePage/SurveyCreatePage';
+import SurveyListPage from './pages/admin/survey/SurveyListPage/SurveyListPage';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,30 @@ const router = createBrowserRouter([
   },
   {
     path: "/support-information",
+    element: <SupportPage />
+  },
+  {
+    path: "/admin/account-management",
+    element: <AccountPage />
+  },
+  {
+    path: "/admin/survey-management",
+    element: <SurveyListPage />
+  },
+  {
+    path: "/admin/survey-management/create",
+    element: <SurveyCreatePage />
+  },
+  {
+    path: "/admin/survey-management/surveys/:surveyId",
+    element: <SupportPage />
+  },
+  {
+    path: "/admin/support-information-management",
+    element: <SupportPage />
+  },
+  {
+    path: "/admin/faqs-management",
     element: <SupportPage />
   },
 ]);
