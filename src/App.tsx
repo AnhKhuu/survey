@@ -12,7 +12,7 @@ import SurveyPage from './pages/SurveyPage/SurveyPage';
 import FAQsPage from './pages/FAQsPage/FAQsPage';
 import SupportPage from './pages/SupportPage/SupportPage';
 import AccountPage from './pages/admin/account/AccountPage/AccountPage';
-import SurveyCreatePage from './pages/admin/survey/SurveyCreatePage/SurveyCreatePage';
+import SurveyCreationPage from './pages/admin/survey/SurveyCreationPage/SurveyCreationPage';
 import SurveyListPage from './pages/admin/survey/SurveyListPage/SurveyListPage';
 
 const router = createBrowserRouter([
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin/survey-management/create",
-    element: <SurveyCreatePage />
+    element: <SurveyCreationPage />
   },
   {
     path: "/admin/survey-management/surveys/:surveyId",

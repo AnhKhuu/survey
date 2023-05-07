@@ -10,7 +10,7 @@ import { BiLogOut } from "react-icons/bi";
 
 export default function SideBar() {
   return (
-    <div className="w-[320px] bg-anger h-screen flex flex-col justify-between">
+    <div className="w-[320px] bg-anger h-screen fixed flex flex-col justify-between">
       <div>
         {fieldManagementList.map(({ title, href, icon }) => (
           <Link to={href}>
