@@ -1,44 +1,145 @@
-import { FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
-import React from 'react'
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  TextField
+} from "@mui/material";
+import { useState } from "react";
+import { BsPlusLg, BsTrashFill } from "react-icons/bs";
+import { getRandomId } from "../../../../../utils";
 
 export default function MultiSelectQuestion() {
-    const [state, setState] = React.useState({
-      gilad: true,
-      jason: false,
-      antoine: false,
-    });
+  const [incorrectAnswerIds, setIncorrectAnswerIds] = useState([getRandomId()]);
+  const [correctAnswerIds, setCorrectAnswerIds] = useState([getRandomId()]);
   
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setState({
-        ...state,
-        [event.target.name]: event.target.checked,
-      });
-    };
-    const { gilad, jason, antoine } = state;
-  
-    return (
-      <FormControl component="fieldset" variant="standard" sx={{marginBottom: "30px"}}>
-          <FormLabel component="legend">Assign responsibility</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
-              }
-              label="Gilad Gray"
+  const handleAddIncorrectAnswer = () => {
+    setIncorrectAnswerIds([...incorrectAnswerIds, getRandomId()]);
+  };
+
+  const handleRemoveIncorrectAnswer = (id: number) => {
+    setIncorrectAnswerIds(incorrectAnswerIds.filter((answerId) => answerId !== id));
+  };
+
+  const handleAddCorrectAnswer = () => {
+    setCorrectAnswerIds([...correctAnswerIds, getRandomId()]);
+  };
+
+  const handleRemoveCorrectAnswer = (id: number) => {
+    setCorrectAnswerIds(correctAnswerIds.filter((answerId) => answerId !== id));
+  };
+
+  return (
+    <>
+      <div className="flex justify-between">
+        <div className="w-1/5">
+          <FormLabel>Question:</FormLabel>
+        </div>
+        <div className="flex-grow">
+          <FormControl sx={{ marginBottom: "30px" }} fullWidth>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              variant="outlined"
+              placeholder="Enter the question..."
             />
-            <FormControlLabel
-              control={
-                <Checkbox checked={jason} onChange={handleChange} name="jason" />
-              }
-              label="Jason Killian"
+          </FormControl>
+        </div>
+      </div>
+      <div className="flex justify-between">
+        <div className="w-1/5">
+          <FormLabel>Correct answer:</FormLabel>
+        </div>
+        <div className="flex-grow">
+          {correctAnswerIds.map((id, index) => (
+            <>
+              <div className="flex items-center w-full justify-between">
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    label={`Answer ${index + 1}`}
+                    sx={{ marginBottom: "20px" }}
+                  />
+                </FormControl>
+                <Button
+                  variant="text"
+                  color="anger"
+                  onClick={() => handleRemoveCorrectAnswer(id)}
+                  sx={{ width: "200px" }}
+                >
+                  <BsTrashFill />
+                  <p className="ml-2">Remove answer</p>
+                </Button>
+              </div>
+            </>
+          ))}
+          <Button
+            variant="text"
+            color="anger"
+            onClick={() => handleAddCorrectAnswer()}
+            sx={{ width: "200px", marginBottom: "30px" }}
+          >
+            <BsPlusLg />
+            <p className="ml-2">Add more answer</p>
+          </Button>
+        </div>
+      </div>
+      <div className="flex justify-between">
+        <div className="w-1/5">
+          <FormLabel>Incorrect answer:</FormLabel>
+        </div>
+        <div className="flex-grow">
+          {incorrectAnswerIds.map((id, index) => (
+            <>
+              <div className="flex items-center w-full justify-between">
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    label={`Answer ${index + 1}`}
+                    sx={{ marginBottom: "20px" }}
+                  />
+                </FormControl>
+                <Button
+                  variant="text"
+                  color="anger"
+                  onClick={() => handleRemoveIncorrectAnswer(id)}
+                  sx={{ width: "200px" }}
+                >
+                  <BsTrashFill />
+                  <p className="ml-2">Remove answer</p>
+                </Button>
+              </div>
+            </>
+          ))}
+          <Button
+            variant="text"
+            color="anger"
+            onClick={() => handleAddIncorrectAnswer()}
+            sx={{ width: "200px", marginBottom: "30px" }}
+          >
+            <BsPlusLg />
+            <p className="ml-2">Add more answer</p>
+          </Button>
+        </div>
+      </div>
+      <div className="flex justify-between">
+        <div className="w-1/5">
+          <FormLabel>Question:</FormLabel>
+        </div>
+        <div className="flex-grow">
+          <FormControl sx={{ marginBottom: "30px" }} fullWidth>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              variant="outlined"
+              placeholder="Enter the question..."
             />
-            <FormControlLabel
-              control={
-                <Checkbox checked={antoine} onChange={handleChange} name="antoine" />
-              }
-              label="Antoine Llorca"
-            />
-          </FormGroup>
-        </FormControl>
-    )
+          </FormControl>
+        </div>
+      </div>
+    </>
+  );
 }
