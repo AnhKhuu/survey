@@ -1,5 +1,5 @@
 import { useQuery } from "react-query"
-import { getUsers } from "../apis/user/userInfo.api"
+import { getUsers } from "../apis/user.api"
 
 export const useGetUsers = () => {
   const { data, refetch, isSuccess } = useQuery(

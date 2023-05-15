@@ -1,4 +1,4 @@
-import httpRequest from "../../services/httpRequest"
+import httpRequest from "../services/httpRequest";
 
 export const getSurveys = () => {
   return httpRequest.get(``)

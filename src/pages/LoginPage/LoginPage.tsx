@@ -12,7 +12,9 @@ import {
 import { useFormik } from "formik";
 import React from "react";
 import LoginLayout from "../../Layout/LoginLayout/LoginLayout";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useLogin } from "../../hooks/mutations";
+import { LoginInfo } from "../../types/user";
 
 export default function LoginPage() {
   return (
@@ -31,6 +33,9 @@ export default function LoginPage() {
 
 function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const { mutate: login } = useLogin({handleSuccess, handleError})
+  const navigate = useNavigate();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -39,8 +44,16 @@ function LoginForm() {
   };
   const formik = useFormik({
     initialValues: {},
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      login(values as LoginInfo)
+    },
   });
+  function handleSuccess() {
+    navigate('/');
+  }
+  function handleError(error: any) {
+    console.log(error);
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -51,7 +64,7 @@ function LoginForm() {
             id="outlined-basic"
             label="Username"
             variant="outlined"
-            name="user_name"
+            name="userName"
             onChange={formik.handleChange}
             required
           />
@@ -77,7 +90,7 @@ function LoginForm() {
                 </InputAdornment>
               }
               label="Password"
-              name="user_password"
+              name="password"
               onChange={formik.handleChange}
               required
             />
