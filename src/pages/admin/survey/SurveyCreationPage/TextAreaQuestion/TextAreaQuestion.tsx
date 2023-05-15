@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, TextField } from "@mui/material";
 import React from "react";
 
-export default function TextAreaQuestion() {
+export default function TextAreaQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
   return (
     <>
       <div className="flex justify-between">
@@ -15,6 +15,9 @@ export default function TextAreaQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the question..."
+              name={`question-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -32,6 +35,9 @@ export default function TextAreaQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the Answer..."
+              name={`question-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -47,6 +53,9 @@ export default function TextAreaQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the Point..."
+              name={`point-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>

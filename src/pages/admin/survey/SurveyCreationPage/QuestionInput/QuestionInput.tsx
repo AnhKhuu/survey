@@ -18,7 +18,7 @@ enum QuestionType {
   SELECT,
 }
 
-export default function QuestionInput() {
+export default function QuestionInput({onChange, questionId}: {onChange: any, questionId: number}) {
   const [questionType, setQuestionType] = useState<QuestionType>();
 
   const handleSelectQuestion = (event: SelectChangeEvent) => {
@@ -28,7 +28,7 @@ export default function QuestionInput() {
   return (
     <>
       {questionType !== undefined ? (
-        renderQuestionByType(questionType)
+        renderQuestionByType(questionType, onChange, questionId)
       ) : (
         <FormControl sx={{ width: "200px" }}>
           <InputLabel id="add-more-question">Select question type</InputLabel>
@@ -50,16 +50,16 @@ export default function QuestionInput() {
   );
 }
 
-function renderQuestionByType(type: QuestionType) {
+function renderQuestionByType(type: QuestionType, onChange: any, questionId: number) {
   switch (type) {
     case QuestionType.TEXT:
-      return <TextQuestion />;
+      return <TextQuestion onChange={onChange} questionId={questionId}/>;
     case QuestionType.TEXTAREA:
-      return <TextAreaQuestion />;
+      return <TextAreaQuestion onChange={onChange} questionId={questionId}/>;
     case QuestionType.MULTI_SELECT:
-      return <MultiSelectQuestion />;
+      return <MultiSelectQuestion onChange={onChange} questionId={questionId}/>;
     case QuestionType.SELECT:
-      return <SelectQuestion />;
+      return <SelectQuestion onChange={onChange} questionId={questionId}/>;
     default:
       break;
   }

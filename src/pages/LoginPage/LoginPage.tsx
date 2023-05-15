@@ -51,6 +51,9 @@ function LoginForm() {
             id="outlined-basic"
             label="Username"
             variant="outlined"
+            name="user_name"
+            onChange={formik.handleChange}
+            required
           />
         </div>
         <div className="mb-3">
@@ -74,6 +77,9 @@ function LoginForm() {
                 </InputAdornment>
               }
               label="Password"
+              name="user_password"
+              onChange={formik.handleChange}
+              required
             />
           </FormControl>
         </div>
@@ -81,7 +87,7 @@ function LoginForm() {
           <p className="mb-10 text-xs hover:text-gray-500">Forget your password?</p>
         </Link>
         <div className="mx-auto mb-5">
-          <Button variant="contained" color="anger">
+          <Button variant="contained" color="anger" type="submit">
             Log in
           </Button>
         </div>

@@ -8,9 +8,11 @@ export default function SurveyListPage() {
   return (
     <AdminLayout>
       <Link to={"/admin/survey-management/create"}>
-        <Button variant="contained" color="anger">
-          Create new survey
-        </Button>
+        <div className="mb-7">
+          <Button variant="contained" color="anger">
+            Create new survey
+          </Button>
+        </div>
       </Link>
       <CustomTable />
     </AdminLayout>

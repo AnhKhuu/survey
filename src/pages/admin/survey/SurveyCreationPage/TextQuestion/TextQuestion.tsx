@@ -1,7 +1,6 @@
 import { FormControl, FormLabel, TextField } from "@mui/material";
-import React from "react";
 
-export default function TextQuestion() {
+export default function TextQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
   return (
     <>
       <div className="flex justify-between">
@@ -15,6 +14,9 @@ export default function TextQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the question..."
+              name={`question-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -30,6 +32,9 @@ export default function TextQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the answer..."
+              name={`answer-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -45,6 +50,9 @@ export default function TextQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the point..."
+              name={`point-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>

@@ -1,17 +1,14 @@
 import {
+  Button,
   FormControl,
   FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  TextField,
-  Button,
+  TextField
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import { getRandomId } from "../../../../../utils";
 
-export default function SelectQuestion() {
+export default function SelectQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
   const [answerIds, setAnswerIds] = useState([getRandomId()]);
 
   const handleAddAnswer = () => {
@@ -34,6 +31,9 @@ export default function SelectQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the question..."
+              name={`question-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -49,6 +49,9 @@ export default function SelectQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the correct answer..."
+              name={`correct-answer-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -68,6 +71,9 @@ export default function SelectQuestion() {
                     variant="outlined"
                     label={`Answer ${index + 1}`}
                     sx={{ marginBottom: "20px" }}
+                    name={`incorrect-answer-${questionId}-${id}`}
+                    onChange={onChange}
+                    required
                   />
                 </FormControl>
                 <Button
@@ -95,7 +101,7 @@ export default function SelectQuestion() {
       </div>
       <div className="flex justify-between">
         <div className="w-1/5">
-          <FormLabel>Question:</FormLabel>
+          <FormLabel>Point:</FormLabel>
         </div>
         <div className="flex-grow">
           <FormControl sx={{ marginBottom: "30px" }} fullWidth>
@@ -103,7 +109,10 @@ export default function SelectQuestion() {
               fullWidth
               id="outlined-basic"
               variant="outlined"
-              placeholder="Enter the question..."
+              placeholder="Enter the point..."
+              name={`point-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>

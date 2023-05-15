@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useFormik } from "formik";
-import React from "react";
-import LoginLayout from "../../Layout/LoginLayout/LoginLayout";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import LoginLayout from "../../Layout/LoginLayout/LoginLayout";
 
 export default function SignupPage() {
   return (
@@ -31,7 +31,7 @@ export default function SignupPage() {
 }
 
 function SignupForm() {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -40,27 +40,71 @@ function SignupForm() {
   };
   const formik = useFormik({
     initialValues: {},
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => console.log({...values})
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-    >
+    <form onSubmit={formik.handleSubmit}>
       <div className="grid grid-cols-2 gap-4 mt-10">
-        <TextField fullWidth label="Fullname" variant="outlined" />
-        <TextField fullWidth label="Roll No" variant="outlined" />
-        <TextField fullWidth label="Class" variant="outlined" />
-        <TextField fullWidth label="Specification" variant="outlined" />
-        <TextField fullWidth label="Section" variant="outlined" />
-        <DatePicker label="Admission Date" />
-        <TextField fullWidth label="Username" variant="outlined" />
-        <FormControl sx={{ width: "100%" }} variant="outlined">
+        <TextField
+          fullWidth
+          name="full_name"
+          label="Fullname"
+          variant="outlined"
+          onChange={formik.handleChange}
+          required
+        />
+        <TextField
+          fullWidth
+          name="roll_no"
+          label="Roll No"
+          variant="outlined"
+          onChange={formik.handleChange}
+          required
+        />
+        <TextField
+          fullWidth
+          name="user_class"
+          label="Class"
+          variant="outlined"
+          onChange={formik.handleChange}
+          required
+        />
+        <TextField
+          fullWidth
+          name="specification"
+          label="Specification"
+          variant="outlined"
+          onChange={formik.handleChange}
+          required
+        />
+        <TextField
+          fullWidth
+          name="section"
+          label="Section"
+          variant="outlined"
+          onChange={formik.handleChange}
+          required
+        />
+        <DatePicker 
+          onChange={(newValue: any) => formik.setFieldValue('admissionDate', newValue.$d)}
+          label="Admission Date"
+        />
+        <TextField
+          fullWidth
+          name="user_name"
+          label="Username"
+          variant="outlined"
+          onChange={formik.handleChange}
+          required
+        />
+        <FormControl sx={{ width: "100%" }} onChange={formik.handleChange}>
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
+            name="user_password"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -75,11 +119,13 @@ function SignupForm() {
               </InputAdornment>
             }
             label="Password"
+            onChange={formik.handleChange}
+            required
           />
         </FormControl>
       </div>
       <div className="mx-auto mt-10 mb-5 w-full flex justify-center">
-        <Button variant="contained" color="anger">
+        <Button variant="contained" color="anger" type="submit">
           Sign up
         </Button>
       </div>

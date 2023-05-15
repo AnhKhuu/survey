@@ -8,7 +8,7 @@ import { useState } from "react";
 import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import { getRandomId } from "../../../../../utils";
 
-export default function MultiSelectQuestion() {
+export default function MultiSelectQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
   const [incorrectAnswerIds, setIncorrectAnswerIds] = useState([getRandomId()]);
   const [correctAnswerIds, setCorrectAnswerIds] = useState([getRandomId()]);
   
@@ -41,6 +41,9 @@ export default function MultiSelectQuestion() {
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the question..."
+              name={`question-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>
@@ -60,6 +63,9 @@ export default function MultiSelectQuestion() {
                     variant="outlined"
                     label={`Answer ${index + 1}`}
                     sx={{ marginBottom: "20px" }}
+                    name={`correct-answer-${questionId}-${id}`}
+                    onChange={onChange}
+                    required
                   />
                 </FormControl>
                 <Button
@@ -100,6 +106,9 @@ export default function MultiSelectQuestion() {
                     variant="outlined"
                     label={`Answer ${index + 1}`}
                     sx={{ marginBottom: "20px" }}
+                    name={`incorrect-answer-${questionId}-${id}`}
+                    onChange={onChange}
+                    required
                   />
                 </FormControl>
                 <Button
@@ -127,7 +136,7 @@ export default function MultiSelectQuestion() {
       </div>
       <div className="flex justify-between">
         <div className="w-1/5">
-          <FormLabel>Question:</FormLabel>
+          <FormLabel>Point:</FormLabel>
         </div>
         <div className="flex-grow">
           <FormControl sx={{ marginBottom: "30px" }} fullWidth>
@@ -135,7 +144,10 @@ export default function MultiSelectQuestion() {
               fullWidth
               id="outlined-basic"
               variant="outlined"
-              placeholder="Enter the question..."
+              placeholder="Enter the point..."
+              name={`point-${questionId}`}
+              onChange={onChange}
+              required
             />
           </FormControl>
         </div>

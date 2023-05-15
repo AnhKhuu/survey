@@ -7,7 +7,7 @@ export default function AdminLayout({children}: {children: any}) {
     <div className='flex'>
       <SideBar />
       <div className='w-[320px]'></div>
-      <div className='p-3 flex-grow'>
+      <div className='px-3 py-5 flex-grow'>
         <Container>
           {children}
         </Container>

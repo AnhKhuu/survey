@@ -12,6 +12,7 @@ import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import QuestionInput from "../QuestionInput/QuestionInput";
 import { getRandomId } from "../../../../../utils";
 import Modal from "../../../../common/Modal/Modal";
+import { useFormik } from "formik";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -62,10 +63,16 @@ export default function QuestionAccordion() {
   const handleToggleModal = () => {
     setOpenModal(prev => !prev)
   }
+
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values) => console.log(values),
+  });
+  
   return (
     <div>
       {questionIds.map((id, index) => (
-        <>
+        <form onSubmit={formik.handleSubmit}>
           <Accordion key={id}>
             <AccordionSummary
               aria-controls="panel1d-content"
@@ -84,7 +91,10 @@ export default function QuestionAccordion() {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <QuestionInput />
+              <QuestionInput 
+                questionId={id}
+                onChange={formik.handleChange}
+              />
             </AccordionDetails>
           </Accordion>
           <Modal
@@ -94,16 +104,18 @@ export default function QuestionAccordion() {
             handleClose={() => handleToggleModal()}
             open={openModal}
           />
-        </>
+        </form>
       ))}
-      <Button
-        variant="outlined"
-        color="anger"
-        onClick={() => handleAddQuestion()}
-      >
-        <BsPlusLg />
-        <p className="ml-2">Add more question</p>
-      </Button>
+      <div className="mt-7 flex items-center justify-between w-full">
+        <Button
+          variant="outlined"
+          color="anger"
+          onClick={() => handleAddQuestion()}
+        >
+          <BsPlusLg />
+          <p className="ml-2">Add more question</p>
+        </Button>
+      </div>
     </div>
   );
 }
