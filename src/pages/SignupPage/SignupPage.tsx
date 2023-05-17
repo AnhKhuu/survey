@@ -58,10 +58,10 @@ function SignupForm() {
       <div className="grid grid-cols-2 gap-4 mt-10">
         <TextField
           fullWidth
-          // name="fullName"
+          name="fullName"
           label="Fullname"
           variant="outlined"
-          // onChange={formik.handleChange}
+          onChange={formik.handleChange}
           required
         />
         <TextField
@@ -97,7 +97,7 @@ function SignupForm() {
           required
         />
         <DatePicker 
-          // onChange={(newValue: any) => formik.setFieldValue('admissionDate', newValue.$d)}
+          onChange={(newValue: any) => formik.setFieldValue('admissionDate', newValue.$d)}
           label="Admission Date"
         />
         <TextField

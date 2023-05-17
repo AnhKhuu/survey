@@ -10,6 +10,9 @@ import SurveyCreationPage from '../pages/admin/survey/SurveyCreationPage/SurveyC
 import SurveyListPage from '../pages/admin/survey/SurveyListPage/SurveyListPage';
 import CompetitionCreationPage from "../pages/admin/competition/CompetitionCreationPage/CompetitionCreationPage";
 import CompetitionListPage from "../pages/admin/competition/CompetitionListPage/CompetitionListPage";
+import FAQPage from "../pages/admin/faq/FAQPage/FAQListPage";
+import FAQListPage from "../pages/admin/faq/FAQPage/FAQListPage";
+import FAQCreationPage from "../pages/admin/faq/FAQCreationPage/FAQCreationPage";
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +73,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin/faqs-management",
-    element: <SupportPage />
+    element: <FAQListPage />
+  },
+  {
+    path: "/admin/faqs-management/Create",
+    element: <FAQCreationPage />
   },
 ]);

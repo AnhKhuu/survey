@@ -10,19 +10,13 @@ import TextQuestion from "../TextQuestion/TextQuestion";
 import TextAreaQuestion from "../TextAreaQuestion/TextAreaQuestion";
 import MultiSelectQuestion from "../MultiSelectQuestion/MultiSelectQuestion";
 import SelectQuestion from "../SelectQuestion/SelectQuestion";
-
-enum QuestionType {
-  TEXT,
-  TEXTAREA,
-  MULTI_SELECT,
-  SELECT,
-}
+import { QuestionType } from "../../../../../types/survey";
 
 export default function QuestionInput({onChange, questionId}: {onChange: any, questionId: number}) {
   const [questionType, setQuestionType] = useState<QuestionType>();
 
   const handleSelectQuestion = (event: SelectChangeEvent) => {
-    setQuestionType(parseInt(event.target.value));
+    setQuestionType(event.target.value as QuestionType);
   };
 
   return (

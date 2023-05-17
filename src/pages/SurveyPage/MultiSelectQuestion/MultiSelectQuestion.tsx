@@ -1,7 +1,8 @@
-import { FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, FormHelperText } from '@mui/material'
-import React from 'react'
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@mui/material';
+import React from 'react';
+import { Question } from '../../../types/survey';
 
-export default function MultiSelectQuestion() {
+export default function MultiSelectQuestion({question, setAnswers}: {question: Question, setAnswers: any}) {
   const [state, setState] = React.useState({
     gilad: true,
     jason: false,
@@ -18,26 +19,16 @@ export default function MultiSelectQuestion() {
 
   return (
     <FormControl component="fieldset" variant="standard" sx={{marginBottom: "30px"}}>
-        <FormLabel component="legend">Assign responsibility</FormLabel>
+        <FormLabel component="legend">{question.questionContent}</FormLabel>
         <FormGroup>
+        {question.answers.map(answer => (
           <FormControlLabel
-            control={
-              <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
-            }
-            label="Gilad Gray"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={jason} onChange={handleChange} name="jason" />
-            }
-            label="Jason Killian"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={antoine} onChange={handleChange} name="antoine" />
-            }
-            label="Antoine Llorca"
-          />
+          control={
+            <Checkbox onChange={handleChange} name={`${answer.answerId}`} />
+          }
+          label={answer.answerContent}
+        />
+        ))}
         </FormGroup>
       </FormControl>
   )

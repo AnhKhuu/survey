@@ -15,12 +15,13 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useTheme } from "@mui/material/styles";
 import * as React from "react";
-import { BsTrashFill } from "react-icons/bs";
-import { useDeleteAccount } from "../../../hooks/mutations";
-import { useGetUsers } from "../../../hooks/queries";
-import { UserDetails } from "../../../types/user";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import { BsTrashFill } from "react-icons/bs";
+import { useDeleteFAQ } from "../../../../../hooks/mutations";
+import { useGetFAQs } from "../../../../../hooks/queries";
+import { FAQDetail } from "../../../../../types/faq";
+import Modal from "../../../../common/Modal/Modal";
+
 
 interface TablePaginationActionsProps {
   count: number;
@@ -102,13 +103,13 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export default function CustomTable() {
+export default function FAQTable() {
   const [page, setPage] = React.useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [userId, setUserId] = useState(-1);
-  const { data, refetch } = useGetUsers();
-  const { mutate: deleteAccount } = useDeleteAccount({
+  const [faqId, setFAQId] = useState(-1);
+  const { data, refetch } = useGetFAQs();
+  const { mutate: deleteFAQ } = useDeleteFAQ({
     handleSuccess,
     handleError,
   });
@@ -122,17 +123,9 @@ export default function CustomTable() {
     console.log(error);
   }
 
-  let rows: UserDetails[] = [];
+  let rows: FAQDetail[] = [];
   if (data) {
-    rows = data.data.map((user: any) => ({
-      userId: user.userId,
-      userName: user.userName,
-      rollNo: user.rollNo,
-      userClass: user.userClass,
-      isActive: user.isActive,
-      // userRole: user.userRole.userRoleName,
-      userRole: user.userRoleId,
-    }));
+    rows = data.data.data
   }
   const emptyRows =
     rows && page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -157,45 +150,17 @@ export default function CustomTable() {
 
   interface Column {
     id:
-      | "userId"
-      | "userName"
-      | "rollNo"
-      | "userClass"
-      | "userRole"
-      | "isActive"
-      | "actions";
+      | "faqId"
+      | "faqQuestion"
+      | "faqContent";
     label: string;
     minWidth?: number;
   }
 
   const columns: readonly Column[] = [
-    { id: "userId", label: "User Id" },
-    { id: "userName", label: "Name" },
-    {
-      id: "rollNo",
-      label: "Roll No",
-      minWidth: 170,
-    },
-    {
-      id: "userClass",
-      label: "Class",
-      minWidth: 170,
-    },
-    {
-      id: "userRole",
-      label: "Role",
-      minWidth: 170,
-    },
-    {
-      id: "isActive",
-      label: "Active",
-      minWidth: 170,
-    },
-    {
-      id: "actions",
-      label: "Actions",
-      minWidth: 170,
-    },
+    { id: "faqId", label: "FAQ Id" },
+    { id: "faqQuestion", label: "Question" },
+    { id: "faqContent", label: "Answer" }
   ];
 
   return (
@@ -218,26 +183,17 @@ export default function CustomTable() {
             {(rowsPerPage > 0
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
-            ).map((row: UserDetails) => (
+            ).map((row: FAQDetail) => (
               <>
-                <TableRow hover key={row.userId}>
+                <TableRow hover key={row.faqId}>
                   <TableCell component="th" scope="row">
-                    {row.userId}
+                    {row.faqId}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {row.userName}
+                    {row.faqQuestion}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {row.rollNo}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.userClass}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.userRole}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.isActive}
+                    {row.faqContent}
                   </TableCell>
                   <TableCell component="th" scope="row">
                     <Button
@@ -245,7 +201,7 @@ export default function CustomTable() {
                       color="anger"
                       onClick={() => {
                         handleToggleModal()
-                        setUserId(row.userId);
+                        setFAQId(row.faqId);
                       }}
                     >
                       <BsTrashFill />
@@ -283,10 +239,10 @@ export default function CustomTable() {
         </Table>
       </TableContainer>
       <Modal
-        dialogContentText="Are you sure to remove this account?"
-        dialogTitle="Remove account confirmation"
+        dialogContentText="Are you sure to remove this sufaqvey?"
+        dialogTitle="Remove faq confirmation"
         handleAction={() => {
-          deleteAccount(userId)
+          deleteFAQ(faqId)
         }}
         handleClose={() => handleToggleModal()}
         open={openModal}

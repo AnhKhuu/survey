@@ -5,7 +5,8 @@ export type UserInfo = {
   userClass: string,
   specification: string,
   section: string,
-  admissionDate: string
+  admissionDate: string,
+  fullName: string
 }
 
 export type FullUserInfo = UserInfo & {

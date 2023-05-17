@@ -5,21 +5,19 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import React from "react";
+import { Question } from "../../../types/survey";
 
-export default function SelectQuestion() {
+export default function SelectQuestion({question, setAnswers}: {question: Question, setAnswers: any}) {
   return (
     <FormControl sx={{marginBottom: "30px"}}>
-      <FormLabel id="question-id">Do you have fun?</FormLabel>
+      <FormLabel id="question-id">{question.questionContent}</FormLabel>
       <RadioGroup
         aria-labelledby="question-id"
-        // defaultValue="female"
         name="radio-buttons-group"
       >
-        <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-        <FormControlLabel value="so so" control={<Radio />} label="So so" />
-        <FormControlLabel value="not really" control={<Radio />} label="Not really" />
-        <FormControlLabel value="no" control={<Radio />} label="No" />
+        {question.answers.map(answer => (
+          <FormControlLabel value={answer.answerId} key={answer.answerId} control={<Radio />} label={answer.answerContent} />
+        ))}
       </RadioGroup>
     </FormControl>
   );

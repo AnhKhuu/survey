@@ -12,7 +12,7 @@ export const login = (data: LoginInfo) => {
   return httpRequest.post(`${apiPrefix}/login`, data);
 }
 
-export const getUserById = (userId: string) => {
+export const getUserById = (userId: number) => {
   return httpRequest.get(`${apiPrefix}/${userId}`)
 }
 
@@ -20,11 +20,11 @@ export const getUsers = () => {
   return httpRequest.get(`${apiPrefix}`);
 }
 
-export const editUser = (userId: string, data: FullUserInfo) => {
+export const editUser = (userId: number, data: FullUserInfo) => {
   return httpRequest.put(`${apiPrefix}/${userId}`, data)
 }
 
 
-export const deleteUser = (userId: string) => {
+export const deleteUser = (userId: number) => {
   return httpRequest.delete(`${apiPrefix}/${userId}`)
 }

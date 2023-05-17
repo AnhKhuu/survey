@@ -1,8 +1,7 @@
-import React from "react";
-import AdminLayout from "../../../../Layout/AdminLayout/AdminLayout";
-import CustomTable from "../../../common/CustomTable/CustomTable";
-import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import AdminLayout from "../../../../Layout/AdminLayout/AdminLayout";
+import SurveyTable from "./SurveyTable";
 
 export default function SurveyListPage() {
   return (
@@ -14,7 +13,7 @@ export default function SurveyListPage() {
           </Button>
         </div>
       </Link>
-      <CustomTable />
+      <SurveyTable />
     </AdminLayout>
   );
 }

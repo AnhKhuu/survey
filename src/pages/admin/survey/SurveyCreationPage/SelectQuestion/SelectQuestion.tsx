@@ -4,20 +4,50 @@ import {
   FormLabel,
   TextField
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import { getRandomId } from "../../../../../utils";
+import { useFormik } from "formik";
+import { QuestionType } from "../../../../../types/survey";
 
 export default function SelectQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
-  const [answerIds, setAnswerIds] = useState([getRandomId()]);
+  const [incorrectAnswers, setIncorrectAnswers] = useState([{
+    answerId: getRandomId(),
+  }]);
 
   const handleAddAnswer = () => {
-    setAnswerIds([...answerIds, getRandomId()]);
+    setIncorrectAnswers([...incorrectAnswers, {answerId: getRandomId()}]);
   };
 
   const handleRemoveAnswer = (id: number) => {
-    setAnswerIds(answerIds.filter((answerId) => answerId !== id));
+    setIncorrectAnswers(incorrectAnswers.filter((answer) => answer.answerId !== id));
   };
+
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values) => console.log(values),
+  });
+
+  useEffect(() => {
+    onChange((prev:any) => (prev.map((question:any) => (question.questionId === questionId ? {
+      questionId: questionId,
+      questionContent: (formik.values as any).question,
+      type: QuestionType.SELECT,
+      answers: [{
+        answerContent: (formik.values as any).correctAnswer,
+        correctAnswer: true
+      }, ...incorrectAnswers]
+    }: question))))
+  }, [formik.values, incorrectAnswers])
+
+  const handleOnChangeIncorrectAnswer = ({id, value}: {id: number, value: string}) => {
+    setIncorrectAnswers((prev:any) => (prev.map((answer:any) => (answer.answerId === id ? {
+      ...answer,
+      answerContent: value,
+      correctAnswer: false
+    }: answer))))
+  }
+  
   return (
     <>
       <div className="flex justify-between">
@@ -31,8 +61,8 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the question..."
-              name={`question-${questionId}`}
-              onChange={onChange}
+              name="question"
+              onChange={formik.handleChange}
               required
             />
           </FormControl>
@@ -49,8 +79,8 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
               id="outlined-basic"
               variant="outlined"
               placeholder="Enter the correct answer..."
-              name={`correct-answer-${questionId}`}
-              onChange={onChange}
+              name="correctAnswer"
+              onChange={formik.handleChange}
               required
             />
           </FormControl>
@@ -61,7 +91,7 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
           <FormLabel>Incorrect answer:</FormLabel>
         </div>
         <div className="flex-grow">
-          {answerIds.map((id, index) => (
+          {incorrectAnswers.map(({answerId}, index) => (
             <>
               <div className="flex items-center w-full justify-between">
                 <FormControl fullWidth>
@@ -71,15 +101,15 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
                     variant="outlined"
                     label={`Answer ${index + 1}`}
                     sx={{ marginBottom: "20px" }}
-                    name={`incorrect-answer-${questionId}-${id}`}
-                    onChange={onChange}
+                    name={`incorrect-answer-${answerId}`}
+                    onChange={(e) => handleOnChangeIncorrectAnswer({id: answerId, value: e.target.value})}
                     required
                   />
                 </FormControl>
                 <Button
                   variant="text"
                   color="anger"
-                  onClick={() => handleRemoveAnswer(id)}
+                  onClick={() => handleRemoveAnswer(answerId)}
                   sx={{ width: "200px" }}
                 >
                   <BsTrashFill />
@@ -97,24 +127,6 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
             <BsPlusLg />
             <p className="ml-2">Add more answer</p>
           </Button>
-        </div>
-      </div>
-      <div className="flex justify-between">
-        <div className="w-1/5">
-          <FormLabel>Point:</FormLabel>
-        </div>
-        <div className="flex-grow">
-          <FormControl sx={{ marginBottom: "30px" }} fullWidth>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              placeholder="Enter the point..."
-              name={`point-${questionId}`}
-              onChange={onChange}
-              required
-            />
-          </FormControl>
         </div>
       </div>
     </>

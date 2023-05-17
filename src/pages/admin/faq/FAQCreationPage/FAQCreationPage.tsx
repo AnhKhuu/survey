@@ -1,30 +1,27 @@
-import { Button, FormControl, Input, TextField } from "@mui/material";
+import { Button, FormControl, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
-import AdminLayout from "../../../../Layout/AdminLayout/AdminLayout";
 import { useNavigate } from "react-router-dom";
+import AdminLayout from "../../../../Layout/AdminLayout/AdminLayout";
+import { useCreateFAQ } from "../../../../hooks/mutations";
 import Modal from "../../../common/Modal/Modal";
-import QuestionAccordion from "./QuestionAccordion/QuestionAccordion";
-import { SurveyCreation } from "../../../../types/survey";
-import { useCreateSurvey } from "../../../../hooks/mutations";
 
-export default function SurveyCreatePage() {
+export default function FAQCreationPage() {
   return (
     <AdminLayout>
       <h1 className="text-lg text-anger font-bold text-center mb-5">
-        Survey Creation Form
+        FAQ Creation Form
       </h1>
-      <SurveyCreationForm />
+      <FAQCreationForm />
     </AdminLayout>
   );
 }
 
-function SurveyCreationForm() {
+function FAQCreationForm() {
   const [openModal, setOpenModal] = useState(false);
-  const [questions, setQuestions] = useState([]);
   let navigate = useNavigate();
-  const { mutate: createSurvey } = useCreateSurvey({
-    handleSuccess: () => navigate("/admin/survey-management"),
+  const { mutate: createFAQ } = useCreateFAQ({
+    handleSuccess: () => navigate("/admin/faqs-management"),
     handleError: (e) => console.log(e)
   });
 
@@ -33,37 +30,18 @@ function SurveyCreationForm() {
   };
 
   const handleCancelCreationForm = () => {
-    navigate("/admin/survey-management");
+    navigate("/admin/faqs-management");
   };
-
-  const handleSubmit = (values: any) => {
-    const {title, img, description} = values
-    const questionList = questions.map((question:any) => ({
-      questionContent: question.questionContent,
-      type: question.type,
-      answers: question.answers.map((answer:any) => ({
-        answerContent: answer.answerContent,
-        correctAnswer: answer.correctAnswer
-      }))
-    }));
-    const surveyInfo = {
-      userRoleId: 2,
-      title,
-      img,
-      description,
-      questions: questionList
-    } as SurveyCreation
-    createSurvey(surveyInfo);
-  }
 
   const formik = useFormik({
     initialValues: {},
     onSubmit: (values: any) => {
-      handleSubmit(values);
+      createFAQ({
+        faqContent: values.faqContent,
+        faqQuestion: values.faqQuestion
+      })
     },
   });
-
-  console.log({questions})
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -72,9 +50,9 @@ function SurveyCreationForm() {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Title"
+            label="Question"
             variant="outlined"
-            name="title"
+            name="faqQuestion"
             onChange={formik.handleChange}
             required
           />
@@ -83,27 +61,15 @@ function SurveyCreationForm() {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Description"
+            label="Answer"
             variant="outlined"
-            name="description"
+            name="faqContent"
             onChange={formik.handleChange}
             required
             multiline
             rows={5}
           />
         </div>
-        <div className="mb-8">
-        <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Img"
-            variant="outlined"
-            name="img"
-            onChange={formik.handleChange}
-            required
-          />
-        </div>
-        <QuestionAccordion onChange={setQuestions}/>
         <div className="flex justify-end">
           <Button
             variant="outlined"

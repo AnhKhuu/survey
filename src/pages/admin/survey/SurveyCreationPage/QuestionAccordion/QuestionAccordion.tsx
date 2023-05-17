@@ -7,7 +7,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import QuestionInput from "../QuestionInput/QuestionInput";
 import { getRandomId } from "../../../../../utils";
@@ -47,16 +47,18 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function QuestionAccordion() {
+export default function QuestionAccordion({onChange}: {onChange:any}) {
   const [openModal, setOpenModal] = useState(false)
-  const [questionIds, setQuestionIds] = useState([getRandomId()]);
+  const [questions, setQuestions] = useState([{
+    questionId: getRandomId()
+  }]);
 
   const handleAddQuestion = () => {
-    setQuestionIds([...questionIds, getRandomId()]);
+    setQuestions([...questions, {questionId: getRandomId()}]);
   };
 
   const handleRemoveQuestion = (id: number) => {
-    setQuestionIds(questionIds.filter((questionId) => questionId !== id));
+    setQuestions(questions.filter(({questionId}) =>  questionId !== id));
     setOpenModal(prev => !prev)
   };
 
@@ -68,12 +70,16 @@ export default function QuestionAccordion() {
     initialValues: {},
     onSubmit: (values) => console.log(values),
   });
+
+  useEffect(() => {
+    onChange(questions);
+  }, [questions])
   
   return (
     <div>
-      {questionIds.map((id, index) => (
-        <form onSubmit={formik.handleSubmit}>
-          <Accordion key={id}>
+      {questions.map((question, index) => (
+        <form>
+          <Accordion key={question.questionId}>
             <AccordionSummary
               aria-controls="panel1d-content"
               id="panel1d-header"
@@ -92,15 +98,15 @@ export default function QuestionAccordion() {
             </AccordionSummary>
             <AccordionDetails>
               <QuestionInput 
-                questionId={id}
-                onChange={formik.handleChange}
+                questionId={question.questionId}
+                onChange={setQuestions}
               />
             </AccordionDetails>
           </Accordion>
           <Modal
             dialogContentText="Are you sure to remove this question?"
             dialogTitle="Remove question confirmation"
-            handleAction={() => handleRemoveQuestion(id)}
+            handleAction={() => handleRemoveQuestion(question.questionId)}
             handleClose={() => handleToggleModal()}
             open={openModal}
           />

@@ -6,49 +6,40 @@ import SelectQuestion from "../SelectQuestion/SelectQuestion";
 import MultiSelectQuestion from "../MultiSelectQuestion/MultiSelectQuestion";
 import { Button, FormControl } from "@mui/material";
 import Modal from "../../common/Modal/Modal";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Question, QuestionType } from "../../../types/survey";
+import { useGetSurveyById } from "../../../hooks/queries";
+import { ResponseQuestionCreation } from "../../../types/response";
 
 
 export default function SurveyForm() {
+  const [openModal, setOpenModal] = useState(false)
+  const [answers, setAnswers] = useState<ResponseQuestionCreation[]>();
+  const {surveyId} = useParams();
+  const {data, refetch} = useGetSurveyById(surveyId);
   let navigate = useNavigate();
   const formik = useFormik({
     initialValues: {},
     onSubmit: (values) => console.log(values),
   });
-  const [openModal, setOpenModal] = useState(false)
   const handleToggleModal = () => {
     setOpenModal(prev => !prev)
   }
   const handleRedirectToHomepage = () => {
     navigate('/')
   }
+  let questions:Question[] = [];
 
-  const DUMMY_DATA = {
-    question: [
-      {
-        title: "Question 1",
-        type: "Text",
-      },
-      {
-        title: "Question 2",
-        type: "TextArea",
-      },
-      {
-        title: "Question 3",
-        type: "MultiSelect",
-      },
-      {
-        title: "Question 4",
-        type: "Select",
-      },
-    ],
-  };
+  if(data) {
+    questions = data.data[0].questions
+  }
+
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <FormControl fullWidth>
-        {DUMMY_DATA.question.map(({ title, type }) => {
-          return renderInputFieldByType(type);
+        {questions.map((question) => {
+          return renderInputFieldByType(question, setAnswers);
         })}
       </FormControl>
       <div className="mb-8 flex w-full justify-center">
@@ -70,24 +61,17 @@ export default function SurveyForm() {
   );
 }
 
-function renderInputFieldByType(type: string) {
-  switch (type) {
-    case Type.TEXT:
-      return <TextQuestion />;
-    case Type.TEXT_AREA:
-      return <TextAreaQuestion />;
-    case Type.SELECT:
-      return <SelectQuestion />;
-    case Type.MULTI_SELECT:
-      return <MultiSelectQuestion />;
+function renderInputFieldByType(question: Question, setAnswers: React.Dispatch<React.SetStateAction<ResponseQuestionCreation[] | undefined>>) {
+  switch (question.type) {
+    case QuestionType.TEXT:
+      return <TextQuestion question={question} setAnswers={setAnswers} />;
+    case QuestionType.TEXTAREA:
+      return <TextAreaQuestion question={question} setAnswers={setAnswers} />;
+    case QuestionType.SELECT:
+      return <SelectQuestion question={question} setAnswers={setAnswers} />;
+    case QuestionType.MULTI_SELECT:
+      return <MultiSelectQuestion question={question} setAnswers={setAnswers} />;
     default:
       break;
   }
-}
-
-const enum Type {
-  TEXT = "Text",
-  TEXT_AREA = "TextArea",
-  SELECT = "Select",
-  MULTI_SELECT = "MultiSelect",
 }

@@ -1,10 +1,11 @@
 import { FormControl, FormLabel, TextField } from "@mui/material";
 import React from "react";
+import { Question } from "../../../types/survey";
 
-export default function TextAreaQuestion() {
+export default function TextAreaQuestion({question, setAnswers}: {question: Question, setAnswers: any}) {
   return (
     <FormControl sx={{ marginBottom: "30px" }}>
-      <FormLabel>Do you have some fun?</FormLabel>
+      <FormLabel>{question.questionContent}</FormLabel>
       <TextField
         multiline
         rows={5}
