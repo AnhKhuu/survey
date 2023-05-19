@@ -1,9 +1,7 @@
 import { Container } from "@mui/material";
-import React from "react";
+import { BsFillEnvelopeFill, BsFillTelephoneFill } from "react-icons/bs";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
-import ContentMenu from "../FAQsPage/ContentMenu/ContentMenu";
 import SupportForm from "./SupportForm";
-import { BsFillTelephoneFill, BsFillEnvelopeFill } from "react-icons/bs";
 
 export default function SupportPage() {
   return (

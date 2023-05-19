@@ -4,7 +4,7 @@ import { Question } from "../../../types/survey";
 
 export default function TextAreaQuestion({question, setAnswers}: {question: Question, setAnswers: any}) {
   return (
-    <FormControl sx={{ marginBottom: "30px" }}>
+    <FormControl sx={{ marginBottom: "30px" }} fullWidth>
       <FormLabel>{question.questionContent}</FormLabel>
       <TextField
         multiline

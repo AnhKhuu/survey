@@ -87,7 +87,7 @@ function FAQCreationForm() {
       </FormControl>
       <Modal
         dialogContentText="Are you sure to cancel this form?"
-        dialogTitle="Cancel survey creation form confirmation"
+        dialogTitle="Cancel faqs creation form confirmation"
         handleAction={() => handleCancelCreationForm()}
         handleClose={() => handleToggleModal()}
         open={openModal}

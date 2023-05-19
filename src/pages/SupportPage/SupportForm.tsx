@@ -1,33 +1,54 @@
-import { FormControl, TextField, Button } from "@mui/material";
+import { Button, FormControl, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useCreateSupportInformation } from "../../hooks/mutations";
 
 export default function SupportForm() {
+  let navigate = useNavigate();
+  const { mutate: createSupportInformation } = useCreateSupportInformation({
+    handleSuccess: () => navigate("/"),
+    handleError: (e) => console.log(e)
+  });
+
   const formik = useFormik({
     initialValues: {},
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values: any) => {
+      createSupportInformation({
+        ...values,
+        userId: 1
+      })
+    },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <FormControl fullWidth>
-        <div className="grid grid-cols-2 gap-4 mt-10">
-            <TextField fullWidth label="Fullname" variant="outlined" />
-            <TextField fullWidth label="Phone number" variant="outlined" />
-        </div>
-        <div className="my-10">
+        <div className="mb-8">
           <TextField
             fullWidth
-            label="What is your problem?"
+            id="outlined-basic"
+            label="Support content"
             variant="outlined"
+            name="supportInformationContent"
+            onChange={formik.handleChange}
+            required
             multiline
             rows={5}
           />
         </div>
-        <div className="mx-auto mb-5">
-          <Button variant="contained" color="anger">
-            SUBMIT
+        <div className="flex justify-end">
+          <Button
+            variant="outlined"
+            color="anger"
+            onClick={() => navigate('/')}
+          >
+            Cancel
           </Button>
+          <div className="ml-3">
+            <Button variant="contained" color="anger" type="submit">
+              Submit
+            </Button>
+          </div>
         </div>
       </FormControl>
     </form>

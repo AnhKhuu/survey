@@ -13,6 +13,7 @@ import CompetitionListPage from "../pages/admin/competition/CompetitionListPage/
 import FAQPage from "../pages/admin/faq/FAQPage/FAQListPage";
 import FAQListPage from "../pages/admin/faq/FAQPage/FAQListPage";
 import FAQCreationPage from "../pages/admin/faq/FAQCreationPage/FAQCreationPage";
+import SupportInformationListPage from "../pages/admin/supportInfo/SupportInformationListPage/SupportInformationListPage";
 
 export const router = createBrowserRouter([
   {
@@ -69,7 +70,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin/support-information-management",
-    element: <SupportPage />
+    element: <SupportInformationListPage />
   },
   {
     path: "/admin/faqs-management",

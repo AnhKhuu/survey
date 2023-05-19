@@ -22,7 +22,7 @@ export default function TextQuestion(props: QuestionProps) {
   
   return (
     <form onSubmit={formik.handleSubmit}>
-      <FormControl sx={{marginBottom: "30px"}}>
+      <FormControl sx={{marginBottom: "30px"}} fullWidth>
         <FormLabel>{question.questionContent}</FormLabel>
         <TextField
               fullWidth

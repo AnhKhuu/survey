@@ -1,6 +1,6 @@
 export type ResponseCreation = {
   surveyId: number,
-  uesrId: number,
+  userId: number,
   questions: ResponseQuestionCreation[]
 }
 

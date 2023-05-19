@@ -1,8 +1,7 @@
-import React from 'react'
-import AdminLayout from '../../../../Layout/AdminLayout/AdminLayout'
 import { Button } from '@mui/material'
 import { Link } from 'react-router-dom'
-import CustomTable from '../../../common/CustomTable/CustomTable'
+import AdminLayout from '../../../../Layout/AdminLayout/AdminLayout'
+import CompetitionTable from './CompetitionTable/CompetitionTable'
 
 export default function CompetitionListPage() {
   return (
@@ -14,7 +13,7 @@ export default function CompetitionListPage() {
           </Button>
         </div>
       </Link>
-      <CustomTable />
+      <CompetitionTable />
     </AdminLayout>
   )
 }

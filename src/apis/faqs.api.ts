@@ -14,3 +14,7 @@ export const postFAQs = (data:FAQcreation) => {
 export const putFAQs = (data:FAQcreation) => {
   return httpRequest.put(apiPrefix, data);
 }
+
+export const deleteFAQ = (faqId: number) => {
+  return httpRequest.delete(`${apiPrefix}/${faqId}`);
+}

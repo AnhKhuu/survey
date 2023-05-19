@@ -2,7 +2,9 @@ import { useMutation } from "react-query"
 import { register, login, deleteUser } from "../apis/user.api"
 import { deleteSurvey, postSurvey } from "../apis/survey.api"
 import { postResponse } from "../apis/response.api"
-import { postFAQs } from "../apis/faqs.api"
+import { deleteFAQ, postFAQs } from "../apis/faqs.api"
+import { deleteCompetitions, postCompetitions } from "../apis/competition.api"
+import { postSupportInformation } from "../apis/supportInformation"
 
 type MutationProps = {
   handleSuccess?: () => void,
@@ -59,7 +61,7 @@ export const useSendResponse = (options: MutationProps = {}) => {
 
 export const useDeleteFAQ = (options: MutationProps = {}) => {
   return useMutation({
-    mutationFn: deleteSurvey,
+    mutationFn: deleteFAQ,
     onSuccess: options.handleSuccess,
     onError: options.handleError
   })
@@ -68,6 +70,30 @@ export const useDeleteFAQ = (options: MutationProps = {}) => {
 export const useCreateFAQ = (options: MutationProps = {}) => {
   return useMutation({
     mutationFn: postFAQs,
+    onSuccess: options.handleSuccess,
+    onError: options.handleError
+  })
+}
+
+export const useCreateCompetition = (options: MutationProps = {}) => {
+  return useMutation({
+    mutationFn: postCompetitions,
+    onSuccess: options.handleSuccess,
+    onError: options.handleError
+  })
+}
+
+export const useDeleteCompetition = (options: MutationProps = {}) => {
+  return useMutation({
+    mutationFn: deleteCompetitions,
+    onSuccess: options.handleSuccess,
+    onError: options.handleError
+  })
+}
+
+export const useCreateSupportInformation = (options: MutationProps = {}) => {
+  return useMutation({
+    mutationFn: postSupportInformation,
     onSuccess: options.handleSuccess,
     onError: options.handleError
   })

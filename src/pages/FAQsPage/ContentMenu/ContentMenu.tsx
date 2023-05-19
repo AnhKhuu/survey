@@ -7,6 +7,8 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import { FAQDetail } from '../../../types/faq';
+import { useGetFAQs } from '../../../hooks/queries';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -50,24 +52,28 @@ type FAQ = {
   faq_content: string
 }
 
-export default function ContentMenu({data}: {data: FAQ[]}) {
-  const [expanded, setExpanded] = React.useState<string | false>('panel1');
-
+export default function ContentMenu() {
+  const [expanded, setExpanded] = React.useState<number | false>(1);
+  const { data, refetch } = useGetFAQs();
+  let faqs:FAQDetail[] = []
+  if(data) {
+    faqs = data.data.data
+  }
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
 
   return (
     <div>
-      {data.map(({faq_id, faq_content, faq_question}) => (
-        <Accordion expanded={expanded === faq_id} onChange={handleChange(faq_id)}>
-        <AccordionSummary aria-controls={faq_id} id={faq_id}>
-          <Typography>{faq_question}</Typography>
+      {faqs.map(({faqId, faqContent, faqQuestion}) => (
+        <Accordion expanded={expanded === faqId} onChange={handleChange(faqId)}>
+        <AccordionSummary aria-controls={`${faqId}`} id={`${faqId}`}>
+          <Typography>{faqQuestion}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            {faq_content}
+            {faqContent}
           </Typography>
         </AccordionDetails>
       </Accordion>

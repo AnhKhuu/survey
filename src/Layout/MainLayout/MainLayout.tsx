@@ -6,7 +6,9 @@ export default function MainLayout({children}: {children: any}) {
   return (
     <div className='flex flex-col justify-between min-h-screen'>
       <Header />
-      {children}
+      <div className="flex-grow">
+        {children}
+      </div>
       <Footer />
     </div>
   )
