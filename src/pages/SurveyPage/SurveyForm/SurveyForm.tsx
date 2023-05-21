@@ -68,10 +68,10 @@ export default function SurveyForm() {
           </div>
         })}
       <div className="mb-8 flex w-full justify-center">
-        <Button variant="text" color="anger" onClick={handleToggleModal} sx={{marginRight: "16px"}}>
+        <Button variant="text" color="blue" onClick={handleToggleModal} sx={{marginRight: "16px"}}>
           Cancel
         </Button>
-        <Button variant="contained" color="anger" type="submit">
+        <Button variant="contained" color="blue" type="submit">
           Submit
         </Button>
       </div>

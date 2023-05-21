@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import "../../../slick.css";
 import "../../../slick-theme.css";
 import DUMMY_DATA from "./mockData.json";
-import { SurveyInfo } from '../../../types';
 
 export default function Honors() {
   const settings = {
@@ -15,15 +14,16 @@ export default function Honors() {
     speed: 500
   };
   return (
-    <Slider {...settings}>
-      {DUMMY_DATA.map(({ imgUrl, content, surveyId }:SurveyInfo) => (
-        <SurveyItem
-          imgUrl={require(`../../../images/${imgUrl}`)}
-          content={content}
-          surveyId={surveyId}
-        />
-      ))}
-    </Slider>
+    // <Slider {...settings}>
+    //   {DUMMY_DATA.map(({ imgUrl, content, surveyId }:SurveyInfo) => (
+    //     <SurveyItem
+    //       imgUrl={require(`../../../images/${imgUrl}`)}
+    //       content={content}
+    //       surveyId={surveyId}
+    //     />
+    //   ))}
+    // </Slider>
+    <></>
   )
 }
 

@@ -7,7 +7,7 @@ export default function SurveyPage() {
   return (
     <MainLayout>
       <Container sx={{marginTop: '54px'}}>
-        <h1 className='text-lg text-anger font-bold text-center mb-5'>SURVEY FORM</h1>
+        <h1 className='text-lg text-green font-bold text-center mb-5'>SURVEY FORM</h1>
         <SurveyForm />
       </Container>
     </MainLayout>

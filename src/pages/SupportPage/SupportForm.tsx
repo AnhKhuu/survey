@@ -39,13 +39,13 @@ export default function SupportForm() {
         <div className="flex justify-end">
           <Button
             variant="outlined"
-            color="anger"
+            color="blue"
             onClick={() => navigate('/')}
           >
             Cancel
           </Button>
           <div className="ml-3">
-            <Button variant="contained" color="anger" type="submit">
+            <Button variant="contained" color="blue" type="submit">
               Submit
             </Button>
           </div>

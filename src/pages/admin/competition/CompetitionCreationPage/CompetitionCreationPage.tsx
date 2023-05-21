@@ -24,7 +24,7 @@ import { CompetitionCreation } from "../../../../types/competition";
 export default function CompetitionCreationPage() {
   return (
     <AdminLayout>
-      <h1 className="text-lg text-anger font-bold text-center mb-5">
+      <h1 className="text-lg text-green font-bold text-center mb-5">
         Competition Creation Form
       </h1>
       <CompetitionCreationForm />
@@ -125,13 +125,13 @@ export default function CompetitionCreationPage() {
           <div className="flex justify-end">
             <Button
               variant="outlined"
-              color="anger"
+              color="blue"
               onClick={() => handleToggleModal()}
             >
               Cancel
             </Button>
             <div className="ml-3">
-              <Button variant="contained" color="anger" type="submit">
+              <Button variant="contained" color="blue" type="submit">
                 Submit
               </Button>
             </div>

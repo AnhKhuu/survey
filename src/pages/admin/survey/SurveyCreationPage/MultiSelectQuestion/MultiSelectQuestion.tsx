@@ -106,7 +106,7 @@ export default function MultiSelectQuestion({onChange, questionId}: {onChange: a
                 </FormControl>
                 <Button
                   variant="text"
-                  color="anger"
+                  color="blue"
                   onClick={() => handleRemoveCorrectAnswer(answerId)}
                   sx={{ width: "200px" }}
                 >
@@ -118,7 +118,7 @@ export default function MultiSelectQuestion({onChange, questionId}: {onChange: a
           ))}
           <Button
             variant="text"
-            color="anger"
+            color="blue"
             onClick={() => handleAddCorrectAnswer()}
             sx={{ width: "200px", marginBottom: "30px" }}
           >
@@ -149,7 +149,7 @@ export default function MultiSelectQuestion({onChange, questionId}: {onChange: a
                 </FormControl>
                 <Button
                   variant="text"
-                  color="anger"
+                  color="blue"
                   onClick={() => handleRemoveIncorrectAnswer(answerId)}
                   sx={{ width: "200px" }}
                 >
@@ -161,7 +161,7 @@ export default function MultiSelectQuestion({onChange, questionId}: {onChange: a
           ))}
           <Button
             variant="text"
-            color="anger"
+            color="blue"
             onClick={() => handleAddIncorrectAnswer()}
             sx={{ width: "200px", marginBottom: "30px" }}
           >

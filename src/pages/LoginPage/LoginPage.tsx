@@ -21,7 +21,7 @@ export default function LoginPage() {
     <LoginLayout>
       <div className="flex items-center justify-center flex-grow w-full bg-slate-100">
         <div className="bg-white rounded-2xl py-16 px-10 min-w-[480px] min-h-[500px] border-solid border-2 border-gray-200">
-          <h1 className="text-2xl font-bold text-center text-anger">
+          <h1 className="text-2xl font-bold text-center text-green">
             Welcome to Environmental Survey
           </h1>
           <LoginForm />
@@ -100,14 +100,14 @@ function LoginForm() {
           <p className="mb-10 text-xs hover:text-gray-500">Forget your password?</p>
         </Link>
         <div className="mx-auto mb-5">
-          <Button variant="contained" color="anger" type="submit">
+          <Button variant="contained" color="blue" type="submit">
             Log in
           </Button>
         </div>
         <hr />
         <div className="mx-auto mt-5">
           <Link to={"/signup"}>
-            <Button variant="text" color="anger">
+            <Button variant="text" color="blue">
               Create new account
             </Button>
           </Link>

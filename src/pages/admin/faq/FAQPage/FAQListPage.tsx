@@ -8,7 +8,7 @@ export default function FAQListPage() {
     <AdminLayout>
       <Link to={"/admin/faqs-management/create"}>
         <div className="mb-7">
-          <Button variant="contained" color="anger">
+          <Button variant="contained" color="blue">
             Create new FAQ
           </Button>
         </div>

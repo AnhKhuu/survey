@@ -26,3 +26,9 @@ export type UserDetails = {
   isActive: string,
   userRole: string,
 }
+
+export enum UserRoleId {
+  ADMIN = 1,
+  STUDENT = 2,
+  STAFF = 3
+}

@@ -2,8 +2,12 @@ import React from 'react'
 import SurveyGallery from '../SurveyGallery/SurveyGallery'
 import DUMMY_DATA from "./mockData.json";
 import { BsArrowRight } from "react-icons/bs";
+import { useGetSurveyByRole } from '../../../hooks/queries';
+import { Skeleton } from '@mui/material';
 
 export default function SurveyForStudent() {
+  const {data, refetch} = useGetSurveyByRole(2, 'GET_SURVEY_FOR_STUDENT');
+
   return (
     <div className='mt-10'>
       <div className="flex justify-between">
@@ -15,7 +19,8 @@ export default function SurveyForStudent() {
           <BsArrowRight />
         </a>
       </div>
-      <SurveyGallery data={DUMMY_DATA}/>
+      {data?.data.data ? 
+        <SurveyGallery data={data.data.data}/> : <Skeleton variant="rectangular" width={210} height={118} />}
     </div>
   )
 }

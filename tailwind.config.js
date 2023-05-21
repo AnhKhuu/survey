@@ -4,9 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'green': '#145C1D',
         'anger': '#7F1717',
-        'vani': '#FDF5CC',
-        'vani-hv': '#DED7B4'
+        'vani-hv': '#A4D4A9',
+        'vani': '#CFE8D4'
       }
     },
   },

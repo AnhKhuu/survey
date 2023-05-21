@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import { getRandomId } from "../../../../../utils";
 import { useFormik } from "formik";
-import { QuestionType } from "../../../../../types/survey";
+import { QuestionCreation, QuestionType } from "../../../../../types/survey";
 
-export default function SelectQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
+export default function SelectQuestion({onChange, question}: {onChange: any, question: QuestionCreation}) {
   const [incorrectAnswers, setIncorrectAnswers] = useState([{
     answerId: getRandomId(),
   }]);
@@ -29,8 +29,8 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
   });
 
   useEffect(() => {
-    onChange((prev:any) => (prev.map((question:any) => (question.questionId === questionId ? {
-      questionId: questionId,
+    onChange((prev:any) => (prev.map((question:any) => (question.questionId === question.questionId ? {
+      questionId: question.questionId,
       questionContent: (formik.values as any).question,
       type: QuestionType.SELECT,
       answers: [{

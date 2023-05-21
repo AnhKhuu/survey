@@ -7,7 +7,8 @@ export type SurveyCreation = {
 }
 
 export type QuestionCreation = {
-  type: string,
+  questionId: number,
+  type?: QuestionType,
   questionContent: string,
   answers: AnswerCreation[],
 }
@@ -32,7 +33,7 @@ export type SurveyDetail = {
 
 export type Question = {
   questionId: number,
-  type: QuestionType,
+  type?: QuestionType,
   questionContent: string,
   answers: Answer[]
 }
@@ -41,4 +42,13 @@ export type Answer = {
   answerId: number,
   correctAnswer: boolean,
   answerContent: string,
+}
+
+export type SurveyInfo = {
+  userRoleId: number
+  title: string,
+  description: string,
+  img: string,
+  questions: QuestionCreation[],
+  surveyId: number
 }

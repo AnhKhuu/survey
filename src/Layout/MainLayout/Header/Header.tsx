@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <div className='min-h-[88px] w-full bg-anger flex justify-between px-36 py-3 items-center'>
+    <div className='min-h-[88px] w-full bg-green flex justify-between px-36 py-3 items-center'>
       <img src={logo} alt="logo" className='max-w-[130px] h-auto' />
       <div className='flex text-white min-w-[50%] items-center justify-between'>
         <div className='flex'>

@@ -1,6 +1,6 @@
 import { useMutation } from "react-query"
 import { register, login, deleteUser } from "../apis/user.api"
-import { deleteSurvey, postSurvey } from "../apis/survey.api"
+import { deleteSurvey, postSurvey, putSurvey } from "../apis/survey.api"
 import { postResponse } from "../apis/response.api"
 import { deleteFAQ, postFAQs } from "../apis/faqs.api"
 import { deleteCompetitions, postCompetitions } from "../apis/competition.api"
@@ -46,6 +46,14 @@ export const useDeleteSurvey = (options: MutationProps = {}) => {
 export const useCreateSurvey = (options: MutationProps = {}) => {
   return useMutation({
     mutationFn: postSurvey,
+    onSuccess: options.handleSuccess,
+    onError: options.handleError
+  })
+}
+
+export const useUpdateSurvey = (options: MutationProps = {}) => {
+  return useMutation({
+    mutationFn: putSurvey,
     onSuccess: options.handleSuccess,
     onError: options.handleError
   })

@@ -14,6 +14,8 @@ import FAQPage from "../pages/admin/faq/FAQPage/FAQListPage";
 import FAQListPage from "../pages/admin/faq/FAQPage/FAQListPage";
 import FAQCreationPage from "../pages/admin/faq/FAQCreationPage/FAQCreationPage";
 import SupportInformationListPage from "../pages/admin/supportInfo/SupportInformationListPage/SupportInformationListPage";
+import ResponseListPage from "../pages/admin/response/ResponseListPage/ResponseListPage";
+import SurveyUpdatePage from "../pages/admin/survey/SurveyCreationPage copy/SurveyUpdatePage";
 
 export const router = createBrowserRouter([
   {
@@ -45,12 +47,24 @@ export const router = createBrowserRouter([
     element: <AccountPage />
   },
   {
+    path: "/admin",
+    element: <AccountPage />
+  },
+  {
     path: "/admin/survey-management",
     element: <SurveyListPage />
   },
   {
+    path: "/admin/response-management",
+    element: <ResponseListPage />
+  },
+  {
     path: "/admin/survey-management/create",
     element: <SurveyCreationPage />
+  },
+  {
+    path: "/admin/survey-management/surveys/:surveyId",
+    element: <SurveyUpdatePage />
   },
   {
     path: "/admin/survey-management/surveys/:surveyId",

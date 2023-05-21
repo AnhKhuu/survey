@@ -8,3 +8,10 @@ export type ResponseQuestionCreation = {
   questionId: number,
   selectedAnswerIds: number[],
 }
+
+export type ResponseDetail = {
+  responseId: number,
+  totalMark: number,
+  surveyId: number,
+  userId: number,
+}

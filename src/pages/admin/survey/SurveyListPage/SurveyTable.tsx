@@ -21,6 +21,7 @@ import { useDeleteSurvey } from "../../../../hooks/mutations";
 import { useGetSurveys } from "../../../../hooks/queries";
 import Modal from "../../../common/Modal/Modal";
 import { SurveyDetail } from "../../../../types/survey";
+import { Link } from "react-router-dom";
 
 
 interface TablePaginationActionsProps {
@@ -191,7 +192,7 @@ export default function SurveyTable() {
               : rows
             ).map((row: SurveyDetail) => (
               <>
-                <TableRow hover key={row.surveyId}>
+                <TableRow component={Link} to={`/admin/survey-management/surveys/${row.surveyId}`} hover key={row.surveyId}>
                   <TableCell component="th" scope="row">
                     {row.surveyId}
                   </TableCell>
@@ -204,7 +205,7 @@ export default function SurveyTable() {
                   <TableCell component="th" scope="row">
                     <Button
                       variant="text"
-                      color="anger"
+                      color="blue"
                       onClick={() => {
                         handleToggleModal()
                         setSurveyId(row.surveyId);

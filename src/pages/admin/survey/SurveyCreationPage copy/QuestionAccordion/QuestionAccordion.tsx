@@ -13,6 +13,7 @@ import QuestionInput from "../QuestionInput/QuestionInput";
 import { getRandomId } from "../../../../../utils";
 import Modal from "../../../../common/Modal/Modal";
 import { useFormik } from "formik";
+import { Question, QuestionCreation, QuestionType, SurveyInfo } from "../../../../../types/survey";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -47,14 +48,18 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function QuestionAccordion({onChange}: {onChange:any}) {
+export default function QuestionAccordion({onChange, surveyInfo}: {onChange:any, surveyInfo: SurveyInfo}) {
   const [openModal, setOpenModal] = useState(false)
-  const [questions, setQuestions] = useState([{
-    questionId: getRandomId()
-  }]);
+  const [questions, setQuestions] = useState<QuestionCreation[]>([]);
+
+  const newQuestion = {
+    questionId: getRandomId(),
+    questionContent: '',
+    answers: []
+  }
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, {questionId: getRandomId()}]);
+    setQuestions([...questions, newQuestion]);
   };
 
   const handleRemoveQuestion = (id: number) => {
@@ -74,10 +79,14 @@ export default function QuestionAccordion({onChange}: {onChange:any}) {
   useEffect(() => {
     onChange(questions);
   }, [questions])
+
+  useEffect(() => {
+    setQuestions(surveyInfo.questions)
+  }, [surveyInfo])
   
   return (
     <div>
-      {questions.map((question, index) => (
+      {questions?.map((question, index) => (
         <form>
           <Accordion key={question.questionId}>
             <AccordionSummary
@@ -98,8 +107,8 @@ export default function QuestionAccordion({onChange}: {onChange:any}) {
             </AccordionSummary>
             <AccordionDetails>
               <QuestionInput 
-                questionId={question.questionId}
                 onChange={setQuestions}
+                question={question}
               />
             </AccordionDetails>
           </Accordion>

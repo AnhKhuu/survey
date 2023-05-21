@@ -7,20 +7,31 @@ import {
 import { useEffect, useState } from "react";
 import { BsPlusLg, BsTrashFill } from "react-icons/bs";
 import { getRandomId } from "../../../../../utils";
+import { QuestionCreation, QuestionType } from "../../../../../types/survey";
 import { useFormik } from "formik";
-import { QuestionType } from "../../../../../types/survey";
 
-export default function SelectQuestion({onChange, questionId}: {onChange: any, questionId: number}) {
+export default function MultiSelectQuestion({onChange, question}: {onChange: any, question: QuestionCreation}) {
   const [incorrectAnswers, setIncorrectAnswers] = useState([{
     answerId: getRandomId(),
   }]);
-
-  const handleAddAnswer = () => {
+  const [correctAnswers, setCorrectAnswers] = useState([{
+    answerId: getRandomId(),
+  }]);
+  
+  const handleAddIncorrectAnswer = () => {
     setIncorrectAnswers([...incorrectAnswers, {answerId: getRandomId()}]);
   };
 
-  const handleRemoveAnswer = (id: number) => {
-    setIncorrectAnswers(incorrectAnswers.filter((answer) => answer.answerId !== id));
+  const handleRemoveIncorrectAnswer = (id: number) => {
+    setIncorrectAnswers(incorrectAnswers.filter(({answerId}) => answerId !== id));
+  };
+
+  const handleAddCorrectAnswer = () => {
+    setCorrectAnswers([...correctAnswers, {answerId: getRandomId()}]);
+  };
+
+  const handleRemoveCorrectAnswer = (id: number) => {
+    setCorrectAnswers(correctAnswers.filter(({answerId}) => answerId !== id));
   };
 
   const formik = useFormik({
@@ -29,16 +40,13 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
   });
 
   useEffect(() => {
-    onChange((prev:any) => (prev.map((question:any) => (question.questionId === questionId ? {
-      questionId: questionId,
+    onChange((prev:any) => (prev.map((question:any) => (question.questionId === question.questionId ? {
+      questionId: question.questionId,
       questionContent: (formik.values as any).question,
-      type: QuestionType.SELECT,
-      answers: [{
-        answerContent: (formik.values as any).correctAnswer,
-        correctAnswer: true
-      }, ...incorrectAnswers]
+      type: QuestionType.MULTI_SELECT,
+      answers: [...correctAnswers, ...incorrectAnswers]
     }: question))))
-  }, [formik.values, incorrectAnswers])
+  }, [formik.values, incorrectAnswers, correctAnswers])
 
   const handleOnChangeIncorrectAnswer = ({id, value}: {id: number, value: string}) => {
     setIncorrectAnswers((prev:any) => (prev.map((answer:any) => (answer.answerId === id ? {
@@ -47,7 +55,15 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
       correctAnswer: false
     }: answer))))
   }
-  
+
+  const handleOnChangeCorrectAnswer = ({id, value}: {id: number, value: string}) => {
+    setCorrectAnswers((prev:any) => (prev.map((answer:any) => (answer.answerId === id ? {
+      ...answer,
+      answerContent: value,
+      correctAnswer: true
+    }: answer))))
+  }
+
   return (
     <>
       <div className="flex justify-between">
@@ -73,17 +89,42 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
           <FormLabel>Correct answer:</FormLabel>
         </div>
         <div className="flex-grow">
-          <FormControl sx={{ marginBottom: "30px" }} fullWidth>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              placeholder="Enter the correct answer..."
-              name="correctAnswer"
-              onChange={formik.handleChange}
-              required
-            />
-          </FormControl>
+          {correctAnswers.map(({answerId}, index) => (
+            <>
+              <div className="flex items-center w-full justify-between">
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    label={`Answer ${index + 1}`}
+                    sx={{ marginBottom: "20px" }}
+                    name={`correct-answer-${answerId}`}
+                    onChange={(e) => handleOnChangeCorrectAnswer({id: answerId, value: e.target.value})}
+                    required
+                  />
+                </FormControl>
+                <Button
+                  variant="text"
+                  color="blue"
+                  onClick={() => handleRemoveCorrectAnswer(answerId)}
+                  sx={{ width: "200px" }}
+                >
+                  <BsTrashFill />
+                  <p className="ml-2">Remove answer</p>
+                </Button>
+              </div>
+            </>
+          ))}
+          <Button
+            variant="text"
+            color="blue"
+            onClick={() => handleAddCorrectAnswer()}
+            sx={{ width: "200px", marginBottom: "30px" }}
+          >
+            <BsPlusLg />
+            <p className="ml-2">Add more answer</p>
+          </Button>
         </div>
       </div>
       <div className="flex justify-between">
@@ -109,7 +150,7 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
                 <Button
                   variant="text"
                   color="blue"
-                  onClick={() => handleRemoveAnswer(answerId)}
+                  onClick={() => handleRemoveIncorrectAnswer(answerId)}
                   sx={{ width: "200px" }}
                 >
                   <BsTrashFill />
@@ -121,8 +162,8 @@ export default function SelectQuestion({onChange, questionId}: {onChange: any, q
           <Button
             variant="text"
             color="blue"
-            onClick={() => handleAddAnswer()}
-            sx={{ width: "200px", marginBottom: '30px' }}
+            onClick={() => handleAddIncorrectAnswer()}
+            sx={{ width: "200px", marginBottom: "30px" }}
           >
             <BsPlusLg />
             <p className="ml-2">Add more answer</p>

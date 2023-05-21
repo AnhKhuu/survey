@@ -26,8 +26,8 @@ export default function Modal(props: IModal) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.handleAction} variant="text" color="anger">Agree</Button>
-          <Button onClick={props.handleClose} variant="contained" color="anger">
+          <Button onClick={props.handleAction} variant="text" color="blue">Agree</Button>
+          <Button onClick={props.handleClose} variant="contained" color="blue">
             Discard
           </Button>
         </DialogActions>

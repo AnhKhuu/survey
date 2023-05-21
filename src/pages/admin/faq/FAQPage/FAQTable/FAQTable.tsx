@@ -198,7 +198,7 @@ export default function FAQTable() {
                   <TableCell component="th" scope="row">
                     <Button
                       variant="text"
-                      color="anger"
+                      color="blue"
                       onClick={() => {
                         handleToggleModal()
                         setFAQId(row.faqId);

@@ -9,39 +9,52 @@ import {
   TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminLayout from "../../../../Layout/AdminLayout/AdminLayout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../../common/Modal/Modal";
 import QuestionAccordion from "./QuestionAccordion/QuestionAccordion";
-import { QuestionType, SurveyCreation } from "../../../../types/survey";
-import { useCreateSurvey } from "../../../../hooks/mutations";
+import { QuestionType, SurveyCreation, SurveyInfo } from "../../../../types/survey";
+import { useCreateSurvey, useUpdateSurvey } from "../../../../hooks/mutations";
 import { UserRoleId } from "../../../../types/user";
+import { useGetSurveyById } from "../../../../hooks/queries";
 
-export default function SurveyCreatePage() {
+export default function SurveyUpdatePage() {
   return (
     <AdminLayout>
       <h1 className="text-lg text-green font-bold text-center mb-5">
-        Survey Creation Form
+        Survey Update Form
       </h1>
-      <SurveyCreationForm />
+      <SurveyUpdateForm />
     </AdminLayout>
   );
 }
 
-function SurveyCreationForm() {
+function SurveyUpdateForm() {
   const [openModal, setOpenModal] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [userRoleId, setUserRoleId] = useState<UserRoleId>();
-
+  const {surveyId} = useParams()
+  const {mutate: updateSurvey} = useUpdateSurvey({
+    handleSuccess: () => navigate("/admin/survey-management"),
+    handleError: (e) => console.log(e),
+  });
+  const {data, refetch} = useGetSurveyById(surveyId)
+  let surveyDetail:any = {};
   const handleSetUserRoleId = (event: SelectChangeEvent) => {
     setUserRoleId(parseInt(event.target.value) as UserRoleId);
   };
   let navigate = useNavigate();
-  const { mutate: createSurvey } = useCreateSurvey({
-    handleSuccess: () => navigate("/admin/survey-management"),
-    handleError: (e) => console.log(e),
-  });
+  if(data) {
+    surveyDetail = data.data[0]
+  }
+
+  useEffect(() => {
+    if(data) {
+      setUserRoleId(data.data[0].userRoleId)
+    }
+  }, [data])
+  
 
   const handleToggleModal = () => {
     setOpenModal((prev) => !prev);
@@ -62,17 +75,30 @@ function SurveyCreationForm() {
       })),
     }));
     const surveyInfo = {
+      surveyId: parseInt(surveyId as string),
       userRoleId: userRoleId,
       title,
       img,
       description,
-      questions: questionList,
+      questions: questions.map((question:any) => {
+        return {
+          ...question,
+          surveyId: parseInt(surveyId as string)
+        }
+      }),
     } as SurveyCreation;
-    createSurvey(surveyInfo);
+    // console.log({surveyInfo}, {userRoleId})
+    updateSurvey(surveyInfo);
   };
 
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {
+      surveyId: surveyDetail.surveyId,
+      img: surveyDetail.img,
+      description: surveyDetail.description,
+      title: surveyDetail.title
+    },
+    enableReinitialize: true,
     onSubmit: (values: any) => {
       handleSubmit(values);
     },
@@ -88,9 +114,11 @@ function SurveyCreationForm() {
               labelId="add-more-question"
               label="Survey is for"
               onChange={handleSetUserRoleId}
+              defaultValue={surveyDetail.userRoleId}
             >
               <MenuItem value={UserRoleId.STUDENT}>Student</MenuItem>
               <MenuItem value={UserRoleId.STAFF}>Staff</MenuItem>
+              <MenuItem value={QuestionType.SELECT}>Select question</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -98,10 +126,11 @@ function SurveyCreationForm() {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Title"
             variant="outlined"
+            placeholder="Please enter title..."
             name="title"
             onChange={formik.handleChange}
+            value={formik.values.title}
             required
           />
         </div>
@@ -109,27 +138,27 @@ function SurveyCreationForm() {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Description"
+            placeholder="Please enter description..."
             variant="outlined"
             name="description"
             onChange={formik.handleChange}
             required
             multiline
+            value={formik.values.description}
             rows={5}
           />
         </div>
         <div className="mb-8">
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Img"
-            variant="outlined"
-            name="img"
-            onChange={formik.handleChange}
-            required
-          />
+        <TextField
+          fullWidth
+          id="img"
+          name="img"
+          placeholder="Please enter img url..."
+          value={formik.values.img}
+          onChange={formik.handleChange}
+        />
         </div>
-        <QuestionAccordion onChange={setQuestions} />
+        <QuestionAccordion onChange={setQuestions} surveyInfo={surveyDetail as SurveyInfo} />
         <div className="flex justify-end">
           <Button
             variant="outlined"

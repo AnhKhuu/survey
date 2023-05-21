@@ -22,3 +22,7 @@ export const deleteSurvey = (surveyId: number) => {
 export const getSurveyById = (surveyId: string | undefined) => {
   return httpRequest.get(`${apiPrefix}/${surveyId}`)
 }
+
+export const getSurveyByRole = (userRoleId: number) => {
+  return httpRequest.get(`${apiPrefix}/role/${userRoleId}`)
+}

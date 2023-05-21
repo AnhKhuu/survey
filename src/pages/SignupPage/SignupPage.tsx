@@ -22,7 +22,7 @@ export default function SignupPage() {
     <LoginLayout>
       <div className="flex items-center justify-center flex-grow w-full bg-slate-100">
         <div className="bg-white rounded-2xl py-10 px-10 min-w-[960px] min-h-[500px] border-solid border-2 border-gray-200">
-          <h1 className="text-2xl font-bold text-center text-anger">
+          <h1 className="text-2xl font-bold text-center text-green">
             Become a member of Environmental Survey
           </h1>
           <SignupForm />
@@ -135,14 +135,14 @@ function SignupForm() {
         </FormControl>
       </div>
       <div className="mx-auto mt-10 mb-5 w-full flex justify-center">
-        <Button variant="contained" color="anger" type="submit">
+        <Button variant="contained" color="blue" type="submit">
           Sign up
         </Button>
       </div>
       <hr />
       <div className="mx-auto mt-5 w-full flex justify-center">
         <Link to={"/login"}>
-          <Button variant="text" color="anger">
+          <Button variant="text" color="blue">
             Already have an account?
           </Button>
         </Link>

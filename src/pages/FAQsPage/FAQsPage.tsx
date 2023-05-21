@@ -8,7 +8,7 @@ export default function FAQsPage() {
   return (
     <MainLayout>
       <Container sx={{marginTop: '54px'}}>
-        <h1 className='text-lg text-anger font-bold text-center mb-5'>FAQs</h1>
+        <h1 className='text-lg text-green font-bold text-center mb-5'>FAQs</h1>
         <ContentMenu />
       </Container>
     </MainLayout>

@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
 
 export default function Footer() {
   return (
-    <div>Footer</div>
-  )
+    <>
+      <hr />
+      <div className="min-h-[88px] w-full flex justify-between px-36 py-3 items-center">
+        <div></div>
+      </div>
+    </>
+  );
 }

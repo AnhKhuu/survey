@@ -18,7 +18,7 @@ import * as React from "react";
 import { BsTrashFill } from "react-icons/bs";
 import { useDeleteAccount } from "../../../hooks/mutations";
 import { useGetUsers } from "../../../hooks/queries";
-import { UserDetails } from "../../../types/user";
+import { UserDetails, UserRoleId } from "../../../types/user";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 
@@ -124,7 +124,7 @@ export default function CustomTable() {
 
   let rows: UserDetails[] = [];
   if (data) {
-    rows = data.data.map((user: any) => ({
+    rows = data.data.data.map((user: any) => ({
       userId: user.userId,
       userName: user.userName,
       rollNo: user.rollNo,
@@ -133,6 +133,17 @@ export default function CustomTable() {
       // userRole: user.userRole.userRoleName,
       userRole: user.userRoleId,
     }));
+  }
+
+  const renderUserRole = (userRoleId: number) => {
+    switch(userRoleId){
+      case UserRoleId.ADMIN:
+        return 'admin'
+      case UserRoleId.STUDENT:
+        return 'student'
+      case UserRoleId.STAFF: 
+        return 'staff'
+    }
   }
   const emptyRows =
     rows && page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -161,7 +172,6 @@ export default function CustomTable() {
       | "userName"
       | "rollNo"
       | "userClass"
-      | "userRole"
       | "isActive"
       | "actions";
     label: string;
@@ -179,11 +189,6 @@ export default function CustomTable() {
     {
       id: "userClass",
       label: "Class",
-      minWidth: 170,
-    },
-    {
-      id: "userRole",
-      label: "Role",
       minWidth: 170,
     },
     {
@@ -234,15 +239,12 @@ export default function CustomTable() {
                     {row.userClass}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {row.userRole}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.isActive}
+                    {row.isActive ? 'Yes' : 'No'}
                   </TableCell>
                   <TableCell component="th" scope="row">
                     <Button
                       variant="text"
-                      color="anger"
+                      color="blue"
                       onClick={() => {
                         handleToggleModal()
                         setUserId(row.userId);
